@@ -7,13 +7,14 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3001;
 
-require("./src/db/config.db"); 
+require("./src/db/config.db");
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-app.use("/api", require("./src/routes/auth.routes")); 
+app.use("/api", require("./src/routes/auth.routes"));
+app.use("/api", require("./src/routes/email.routes"));
 
 app.listen(port, () => {
   console.log("✅ Servidor backend corriendo en el puerto", port);

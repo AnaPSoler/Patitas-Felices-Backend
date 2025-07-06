@@ -6,6 +6,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^1.0.3",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
@@ -13,11 +14,12 @@
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
-    "mercadopago": "^2.8.0",
+    "mercadopago": "^1.5.0",
     "mongoose": "^8.16.1",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
-    "nodemailer": "^7.0.3"
+    "nodemailer": "^7.0.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

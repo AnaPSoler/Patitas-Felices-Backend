@@ -10,6 +10,7 @@ router.use("/auth", authRoutes);
 router.use("/shifts", shiftRoutes);
 router.use("/pacientes", patientRoutes);
 
+
 router.get("/", (req, res) => {
   res.send("🚀 API de Patitas Felices funcionando correctamente");
 });

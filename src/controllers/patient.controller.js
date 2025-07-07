@@ -40,10 +40,33 @@ const deletePatient = async (req, res) => {
   }
 };
 
+const updatePatient = async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    const updatedPatient = await Patient.findByIdAndUpdate(
+      patientId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedPatient) {
+      return res.status(404).json({ msg: "Paciente no encontrado" });
+    }
+
+    res.status(200).json(updatedPatient);
+  } catch (error) {
+    console.error("❌ Error al actualizar paciente:", error);
+    res.status(500).json({ msg: "Error al actualizar paciente" });
+  }
+};
+
 module.exports = {
   createPatient,
   getAllPatients,
   getMyPatients,
   deletePatient,
+  updatePatient,
 };
 

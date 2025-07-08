@@ -12,6 +12,7 @@ router.use("/shifts", shiftRoutes);
 router.use("/pacientes", patientRoutes);
 router.use("/contact", contactRoutes);
 
+
 router.get("/", (req, res) => {
   res.send("🚀 API de Patitas Felices funcionando correctamente");
 });

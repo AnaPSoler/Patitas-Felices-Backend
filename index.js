@@ -18,7 +18,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://patitas-felices-git-main-ana-paula-solers-projects.vercel.app",
-  "https://patitas-felices.vercel.app",
+  "https://patitas-felices-ten.vercel.app",
 ];
 
 app.use(

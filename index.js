@@ -1,26 +1,51 @@
 require("dotenv").config();
 
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
-const fs = require("fs");
-
-const mercadopagoRoutes = require("./src/routes/mercadopago.routes");
 
 require("./src/db/config.db");
 
-app.use(cors());
+const mercadopagoRoutes = require("./src/routes/mercadopago.routes");
+const authRoutes = require("./src/routes/auth.routes");
+const emailRoutes = require("./src/routes/email.routes");
+
+const app = express();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://patitasfelices7.netlify.app",
+  "https://patitasfelices-backend.onrender.com",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(
+          new Error(
+            "CORS policy for this site does not allow access from the specified Origin."
+          )
+        );
+      }
+    },
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const router = require("./src/routes/index.routes");
-app.use("/api", router);
+app.use("/api/auth", authRoutes);
+app.use("/api/email", emailRoutes);
+app.use("/api/email", emailRoutes);
 
-app.use("/api", require("./src/routes/auth.routes"));
-app.use("/api", require("./src/routes/email.routes"));
 app.use("/api/mercadopago", mercadopagoRoutes);
 app.use("/public", express.static(path.join(__dirname, "public")));
 

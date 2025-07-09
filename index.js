@@ -17,8 +17,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://patitasfelices7.netlify.app",
-  "https://patitasfelices-backend.onrender.com",
+  ,
+  "https://patitas-felices-ten.vercel.app",
 ];
 
 app.use(

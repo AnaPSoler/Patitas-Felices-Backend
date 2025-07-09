@@ -1,17 +1,16 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import mercadopago from "mercadopago";
-import mercadopagoRoutes from "./routes/mercadopago.routes.js";
-import emailRoutes from "./routes/email.routes.js";
-
-dotenv.config();
-
-mercadopago.configure({
-  access_token: process.env.MP_ACCESS_TOKEN,
-});
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const path = require("path");
+require("dotenv").config();
 
 const app = express();
+
+require("./src/db/config.db");
+
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -32,22 +31,34 @@ app.use(
         );
       }
     },
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-app.use(express.json());
 
+const authRoutes = require("./src/routes/auth.routes");
+const shiftRoutes = require("./src/routes/shift.routes");
+const patientRoutes = require("./src/routes/patient.routes");
+const contactRoutes = require("./src/routes/contact.routes");
+const mercadopagoRoutes = require("./src/routes/mercadopago.routes");
+const emailRoutes = require("./src/routes/email.routes");
+
+app.use("/api/auth", authRoutes);
+app.use("/api/shifts", shiftRoutes);
+app.use("/api/pacientes", patientRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/mercadopago", mercadopagoRoutes);
-app.use("/api", emailRoutes);
+app.use("/api/email", emailRoutes);
+
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.send("Servidor backend funcionando correctamente");
+  res.send("🚀 API de Patitas Felices funcionando correctamente");
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`✅ Servidor backend corriendo en el puerto ${port}`);
 });

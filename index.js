@@ -15,9 +15,12 @@ require("./src/db/config.db");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://patitas-felices-git-main-ana-paula-solers-projects.vercel.app",
+  "https://patitasfelices7.netlify.app",
+  "https://patitasfelices-backend.onrender.com",
   "https://patitas-felices-ten.vercel.app",
 ];
 

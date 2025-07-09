@@ -17,8 +17,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  ,
-  "https://patitas-felices-ten.vercel.app",
+  "https://patitas-felices-git-main-ana-paula-solers-projects.vercel.app",
 ];
 
 app.use(
@@ -40,13 +39,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use("/api/auth", authRoutes);
 app.use("/api/shifts", shiftRoutes);
 app.use("/api/pacientes", patientRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/mercadopago", mercadopagoRoutes);
-
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 

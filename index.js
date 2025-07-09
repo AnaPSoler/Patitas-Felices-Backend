@@ -13,10 +13,13 @@ const emailRoutes = require("./src/routes/email.routes");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://patitasfelices7.netlify.app",
   "https://patitasfelices-backend.onrender.com",
+  "https://patitas-felices-ten.vercel.app",
 ];
 
 app.use(
@@ -44,8 +47,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/email", emailRoutes);
-app.use("/api/email", emailRoutes);
-
 app.use("/api/mercadopago", mercadopagoRoutes);
 app.use("/public", express.static(path.join(__dirname, "public")));
 

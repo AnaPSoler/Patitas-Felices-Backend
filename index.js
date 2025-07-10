@@ -14,14 +14,14 @@ const mercadopagoRoutes = require("./src/routes/mercadopago.routes");
 require("./src/db/config.db");
 
 const app = express();
-
 app.set("trust proxy", 1);
+
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://patitasfelices7.netlify.app",
   "https://patitasfelices-backend.onrender.com",
   "https://patitas-felices-ten.vercel.app",
+  "https://patitas-felices-ana-paula-solers-projects.vercel.app", 
 ];
 
 app.use(
@@ -42,7 +42,6 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 app.use("/api/auth", authRoutes);
 app.use("/api/shifts", shiftRoutes);

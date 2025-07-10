@@ -65,6 +65,7 @@ const createPreference = async (req, res) => {
 
     res.status(200).json({ id: response.body.id });
   } catch (error) {
+    console.log("Error al crear preferencia:", error); 
     res.status(500).json({
       error: error.message || "Error desconocido al crear preferencia.",
     });

@@ -6,6 +6,7 @@ const shiftSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   hora: { type: String, required: true },
   detalle: { type: String },
+  nombreDuenio: { type: String },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 

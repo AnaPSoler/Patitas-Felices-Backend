@@ -10,7 +10,8 @@ const createShift = async (req, res) => {
       fecha,
       hora,
       detalle,
-      userId: req.user.id,
+      nombreDuenio: req.user.nombre, 
+      userId: req.user.id, 
     });
 
     await nuevoTurno.save();

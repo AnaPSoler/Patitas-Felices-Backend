@@ -4,14 +4,37 @@ const createShift = async (req, res) => {
   try {
     const { mascota, veterinario, fecha, hora, detalle } = req.body;
 
+    const ahora = new Date();
+    const fechaTurno = new Date(fecha);
+    const [horaHoras, horaMinutos] = hora.split(":");
+    fechaTurno.setHours(horaHoras, horaMinutos, 0, 0);
+
+    if (fechaTurno <= ahora) {
+      return res.status(400).json({
+        msg: "No se puede reservar un turno en una fecha y hora que ya pasaron",
+      });
+    }
+
+    const turnoExistente = await Shift.findOne({
+      mascota,
+      fecha: new Date(fecha),
+      hora,
+    });
+
+    if (turnoExistente) {
+      return res.status(400).json({
+        msg: "Ya existe un turno reservado para esta mascota en esa fecha y hora",
+      });
+    }
+
     const nuevoTurno = new Shift({
       mascota,
       veterinario,
       fecha,
       hora,
       detalle,
-      nombreDuenio: req.user.nombre, 
-      userId: req.user.id, 
+      nombreDuenio: req.user.nombre,
+      userId: req.user.id,
     });
 
     await nuevoTurno.save();
@@ -34,7 +57,7 @@ const getAllShifts = async (req, res) => {
 const getUserShifts = async (req, res) => {
   try {
     const userId = req.user.id;
-    const turnos = await Shift.find({ userId }).sort({ fecha: 1 });
+    const turnos = await Shift.find({ userId }).sort({ fecha: -1 });
     res.json(turnos);
   } catch (error) {
     console.error("❌ Error al obtener turnos del usuario:", error);

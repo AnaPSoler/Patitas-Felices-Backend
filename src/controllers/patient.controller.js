@@ -62,11 +62,39 @@ const updatePatient = async (req, res) => {
   }
 };
 
+const obtenerDatosDueñoDesdePrimeraMascota = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const mascota = await Patient.findOne({ userId }).sort({ createdAt: 1 });
+
+    if (!mascota) {
+      return res
+        .status(404)
+        .json({ mensaje: "El usuario aún no ha registrado mascotas." });
+    }
+
+    const datosDueño = {
+      nombreDuenio: mascota.nombreDuenio,
+      apellidoDuenio: mascota.apellidoDuenio,
+      emailDuenio: mascota.emailDuenio,
+      telefonoDuenio: mascota.telefonoDuenio,
+    };
+
+    res.json(datosDueño);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener los datos del dueño", error });
+  }
+};
+
 module.exports = {
   createPatient,
   getAllPatients,
   getMyPatients,
   deletePatient,
   updatePatient,
+  obtenerDatosDueñoDesdePrimeraMascota,
 };
 

@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const enviarCorreo = async (req, res) => {
   const { nombre, email, mensaje, plan } = req.body;
 
-  const baseUrl = process.env.BASE_URL;
+  const frontendHomeUrl = "https://patitas-felices-ten.vercel.app"; 
 
   try {
     const transporter = nodemailer.createTransport({
@@ -44,7 +44,7 @@ const enviarCorreo = async (req, res) => {
           <p>Próximamente uno de nuestros especialistas se pondrá en contacto para brindarte más información.</p>
           <p>Saludos afectuosos,<br/>El equipo de <strong>Patitas Felices</strong></p>
           <a
-            href="${baseUrl}"
+            href="${frontendHomeUrl}"
             style="
               display: inline-block;
               margin-top: 10px;
@@ -57,7 +57,7 @@ const enviarCorreo = async (req, res) => {
               font-size: 16px;
             "
           >
-            Ir a la página
+            Ir al sitio
           </a>
         </div>
       `,
